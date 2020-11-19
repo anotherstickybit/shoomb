@@ -1,7 +1,10 @@
 package tech.itpark.shoomb.manager;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import tech.itpark.shoomb.mapper.PlaylistContainerRowMapper;
 import tech.itpark.shoomb.mapper.PlaylistRowMapper;
@@ -10,10 +13,7 @@ import tech.itpark.shoomb.model.Playlist;
 import tech.itpark.shoomb.model.PlaylistContainer;
 import tech.itpark.shoomb.model.Track;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -37,9 +37,9 @@ public class PlaylistManager {
                 Map.of("name", name),
                 playlistRowMapper
         );
-        Set<Track> trackSet = new HashSet<>();
+        List<Track> trackList = new ArrayList<>();
         for (Long id : query) {
-            trackSet.add(template.queryForObject(
+            trackList.add(template.queryForObject(
                     "select t.id as track_id, t.name as track_name, al.name as album_name, " +
                             "a.name as artist_name from tracks t inner join albums al on t.album = al.id " +
                             "inner join artists a on a.id = al.artist where t.id = :id",
@@ -47,7 +47,48 @@ public class PlaylistManager {
                     trackRowMapper
             ));
         }
-        return new Playlist(name, trackSet);
+        return new Playlist(name, trackList);
+    }
+
+    public void createNew(Playlist item) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        template.update(
+                "insert into playlists(name, track_id) values (:name, :track_id)",
+                new MapSqlParameterSource(Map.of(
+                    "name", item.getName(),
+                    "track_id", item.getTrackList().get(0).getId()
+                )),
+                keyHolder
+        );
+    }
+
+    public void addTrack(String playlistName, Track track) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        template.update(
+                "insert into playlists(name, track_id) values (:name, :track_id)",
+                new MapSqlParameterSource(Map.of(
+                        "name", playlistName,
+                        "track_id", track.getId()
+                )),
+                keyHolder
+        );
+    }
+
+    public void removeTrack(String playlistName, Track track) {
+        template.update(
+                "delete from playlists where name = :name and track_id = :track_id",
+                new MapSqlParameterSource(Map.of(
+                        "name", playlistName,
+                        "track_id", track.getId()
+                ))
+        );
+    }
+
+    public void removePlaylist(String name) {
+        template.update(
+                "delete from playlists where name = :name",
+                Map.of("name", name)
+        );
     }
 
 }
