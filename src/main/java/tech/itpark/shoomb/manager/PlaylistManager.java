@@ -6,88 +6,96 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
-import tech.itpark.shoomb.mapper.PlaylistContainerRowMapper;
-import tech.itpark.shoomb.mapper.PlaylistRowMapper;
-import tech.itpark.shoomb.mapper.TrackRowMapper;
 import tech.itpark.shoomb.model.Playlist;
-import tech.itpark.shoomb.model.PlaylistContainer;
+import tech.itpark.shoomb.model.PlaylistPreview;
 import tech.itpark.shoomb.model.Track;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
 public class PlaylistManager {
     private final NamedParameterJdbcTemplate template;
-    private final PlaylistContainerRowMapper containerRowMapper = new PlaylistContainerRowMapper();
-    private final PlaylistRowMapper playlistRowMapper = new PlaylistRowMapper();
-    private final TrackRowMapper trackRowMapper = new TrackRowMapper();
 
-    public List<PlaylistContainer> getAll() {
+    public List<PlaylistPreview> getAll() {
         return template.query(
-                "select distinct name from playlists order by name",
-                containerRowMapper
+                "select id as playlist_id, name as playlist_name from playlists order by name",
+                (resultSet, i) -> new PlaylistPreview(
+                        resultSet.getLong("playlist_id"),
+                        resultSet.getString("playlist_name")
+                )
         );
     }
 
-    public Playlist getByName(String name) {
-        List<Long> query = template.query(
-                "select p.track_id from playlists p inner join tracks t on p.track_id = t.id " +
-                        "inner join albums a on t.album = a.id where p.name = :name",
-                Map.of("name", name),
-                playlistRowMapper
+    public Playlist getById(long id) {
+        List<Track> trackList = template.query(
+                "select p.track_id as track_id, t.name as track_name, ar.name as artist_name from playlist_track p " +
+                        "inner join tracks t on t.id = p.track_id inner join albums a on a.id = t.album_id " +
+                        "inner join artists ar on ar.id = a.artist_id " +
+                        "where p.playlist_id = :id",
+                Map.of("id", id),
+                (resultSet, i) -> new Track(
+                        resultSet.getLong("track_id"),
+                        resultSet.getString("track_name"),
+                        resultSet.getString("artist_name")
+                )
         );
-        List<Track> trackList = new ArrayList<>();
-        for (Long id : query) {
-            trackList.add(template.queryForObject(
-                    "select t.id as track_id, t.name as track_name, al.name as album_name, " +
-                            "a.name as artist_name from tracks t inner join albums al on t.album = al.id " +
-                            "inner join artists a on a.id = al.artist where t.id = :id",
-                    Map.of("id", id),
-                    trackRowMapper
-            ));
+        return template.queryForObject(
+                "select p.id as playlist_id, p.name as playlist_name " +
+                        "from playlists p where id = :id",
+                Map.of("id", id),
+                (resultSet, i) -> new Playlist(
+                        resultSet.getLong("playlist_id"),
+                        resultSet.getString("playlist_name"),
+                        trackList
+                )
+        );
+    }
+
+    public void createNew(PlaylistPreview playlistPreview) {
+        if (playlistPreview.getId() == 0) {
+            KeyHolder keyHolder = new GeneratedKeyHolder();
+            template.update(
+                    "insert into playlists(name) values (:name)",
+                    new MapSqlParameterSource(Map.of(
+                            "name", playlistPreview.getName()
+                    )),
+                    keyHolder
+            );
         }
-        return new Playlist(name, trackList);
     }
-
-    public void createNew(Playlist item) {
+//
+    public void addTrack(long playlistId, long trackId) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         template.update(
-                "insert into playlists(name, track_id) values (:name, :track_id)",
+                "insert into playlist_track(playlist_id, track_id) values (:playlist_id, :track_id)",
                 new MapSqlParameterSource(Map.of(
-                    "name", item.getName(),
-                    "track_id", item.getTrackList().get(0).getId()
+                        "playlist_id", playlistId,
+                        "track_id", trackId
                 )),
                 keyHolder
         );
     }
-
-    public void addTrack(String playlistName, Track track) {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
+//
+    public void removeTrack(long playlistId, long trackId) {
         template.update(
-                "insert into playlists(name, track_id) values (:name, :track_id)",
+                "delete from playlist_track where playlist_id = :playlist_id and track_id = :track_id",
                 new MapSqlParameterSource(Map.of(
-                        "name", playlistName,
-                        "track_id", track.getId()
-                )),
-                keyHolder
-        );
-    }
-
-    public void removeTrack(String playlistName, Track track) {
-        template.update(
-                "delete from playlists where name = :name and track_id = :track_id",
-                new MapSqlParameterSource(Map.of(
-                        "name", playlistName,
-                        "track_id", track.getId()
+                        "playlist_id", playlistId,
+                        "track_id", trackId
                 ))
         );
     }
 
-    public void removePlaylist(String name) {
+    public void removePlaylist(long id) {
         template.update(
-                "delete from playlists where name = :name",
-                Map.of("name", name)
+                "delete from playlist_track where playlist_id = :id",
+                Map.of("id", id)
+        );
+        template.update(
+                "delete from playlists where id = :id",
+                Map.of("id", id)
         );
     }
 

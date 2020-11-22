@@ -6,6 +6,5 @@ import lombok.Value;
 public class Track {
     long id;
     String name;
-    String artist;
-    String album;
+    String artistName;
 }

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tech.itpark.shoomb.manager.PlaylistManager;
 import tech.itpark.shoomb.model.Playlist;
-import tech.itpark.shoomb.model.PlaylistContainer;
+import tech.itpark.shoomb.model.PlaylistPreview;
 
 import java.util.List;
 
@@ -15,23 +15,33 @@ public class PlaylistController {
     private final PlaylistManager playlistManager;
 
     @GetMapping
-    public List<PlaylistContainer> getAll() {
+    public List<PlaylistPreview> getAll() {
         return playlistManager.getAll();
     }
 
-    @GetMapping("/{name}")
-    public Playlist getByName(@PathVariable String name) {
-        return playlistManager.getByName(name);
+    @GetMapping("/{id}")
+    public Playlist getById(@PathVariable long id) {
+        return playlistManager.getById(id);
     }
 
     @PostMapping
-    public void save(@RequestBody Playlist item) {
-        playlistManager.createNew(item);
+    public void createNew(@RequestBody PlaylistPreview playlistPreview) {
+        playlistManager.createNew(playlistPreview);
     }
 
-    @DeleteMapping("/delete/{name}")
-    public void delete(@PathVariable String name) {
-        playlistManager.removePlaylist(name);
+    @PostMapping("/add/{id}")
+    public void addTrack(@PathVariable long id, @RequestParam long trackId) {
+        playlistManager.addTrack(id, trackId);
+    }
+
+    @PostMapping("/remove/{id}")
+    public void removeTrack(@PathVariable long id, @RequestParam long trackId) {
+        playlistManager.removeTrack(id, trackId);
+    }
+
+    @PostMapping("/removepl/{id}")
+    public void removeTrack(@PathVariable long id) {
+        playlistManager.removePlaylist(id);
     }
 
 }

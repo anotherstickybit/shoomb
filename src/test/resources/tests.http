@@ -1,6 +1,9 @@
 
 ###
-http://localhost:8080/playlists/playlist 1
+GET http://localhost:8080/playlists
+
+###
+GET http://localhost:8080/playlists/6
 
 
 ###
@@ -8,17 +11,24 @@ POST http://localhost:8080/playlists
 Content-Type: application/json
 
 {
-"name": "new playlist",
-  "trackList": [{
-    "id": 7,
-    "name": "Damage, Inc",
-    "artist": "Metallica",
-    "album": "Master of Puppets"
-  }]
+  "id": 0,
+  "name": "rock"
 }
 
 ###
 
 DELETE http://localhost:8080/playlists/delete/playlist 2
+
+###
+POST http://localhost:8080/playlists/add/1?trackId=1
+
+###
+POST http://localhost:8080/playlists/remove/1?trackId=1
+
+###
+POST http://localhost:8080/playlists/removepl/6
+
+###
+GET http://localhost:8080/artists/search/gree
 
 
