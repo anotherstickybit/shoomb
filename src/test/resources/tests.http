@@ -25,10 +25,11 @@ POST http://localhost:8080/playlists/add/1?trackId=1
 ###
 POST http://localhost:8080/playlists/remove/1?trackId=1
 
-###
-POST http://localhost:8080/playlists/removepl/6
 
 ###
 GET http://localhost:8080/artists/search/gree
 
+
+###
+DELETE http://localhost:8080/playlists/removepl/1
 
