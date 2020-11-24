@@ -3,7 +3,7 @@
 GET http://localhost:8080/playlists
 
 ###
-GET http://localhost:8080/playlists/6
+GET http://localhost:8080/playlists/1
 
 
 ###
@@ -23,7 +23,7 @@ DELETE http://localhost:8080/playlists/delete/playlist 2
 POST http://localhost:8080/playlists/add/1?trackId=1
 
 ###
-POST http://localhost:8080/playlists/remove/1?trackId=1
+DELETE http://localhost:8080/playlists/remove/1?trackId=1
 
 
 ###
