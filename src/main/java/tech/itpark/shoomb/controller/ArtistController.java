@@ -1,16 +1,14 @@
 package tech.itpark.shoomb.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tech.itpark.shoomb.manager.ArtistManager;
 import tech.itpark.shoomb.model.Artist;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 @RequestMapping("/artists")
 public class ArtistController {
