@@ -40,7 +40,7 @@ public class ArtistManager {
     public List<Artist> search(String text) {
         return template.query(
                 "select a.id as artist_id, a.name as artist_name from artists a where lower(a.name) like :text",
-                Map.of("text", "%" + text.toLowerCase() +"%"),
+                Map.of("text", "%" + text.toLowerCase() + "%"),
                 (resultSet, i) -> new Artist(
                         resultSet.getLong("artist_id"),
                         resultSet.getString("artist_name")

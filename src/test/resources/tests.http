@@ -36,3 +36,6 @@ DELETE http://localhost:8080/playlists/removepl/1
 
 ###
 GET http://localhost:8080/albums/4
+
+###
+GET http://localhost:8080/tracks/search/enter
