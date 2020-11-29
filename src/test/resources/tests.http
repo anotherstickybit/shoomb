@@ -20,7 +20,7 @@ Content-Type: application/json
 DELETE http://localhost:8080/playlists/delete/playlist 2
 
 ###
-POST http://localhost:8080/playlists/add/1?trackId=19
+POST http://localhost:8080/playlists/add/1?trackId=1
 
 ###
 DELETE http://localhost:8080/playlists/remove/1?trackId=1
@@ -32,6 +32,9 @@ GET http://localhost:8080/artists/search/gree
 
 ###
 DELETE http://localhost:8080/playlists/removepl/1
+
+###
+DELETE http://localhost:8080/playlists/remove/10
 
 
 ###

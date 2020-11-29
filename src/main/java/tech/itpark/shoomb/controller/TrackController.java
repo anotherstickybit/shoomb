@@ -8,7 +8,7 @@ import tech.itpark.shoomb.model.Track;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RequiredArgsConstructor
 @RequestMapping("/tracks")
 public class TrackController {

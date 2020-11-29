@@ -24,6 +24,7 @@ create table playlists(
 );
 
 create table playlist_track(
+    id integer primary key auto_increment,
     playlist_id integer not null,
     track_id integer not null,
     foreign key (playlist_id) references playlists,

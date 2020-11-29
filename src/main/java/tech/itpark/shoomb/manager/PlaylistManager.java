@@ -29,17 +29,17 @@ public class PlaylistManager {
     }
 
     public Playlist getById(long id) {
-        List<Track> trackList = template.query(
-                "select p.track_id as track_id, t.name as track_name, ar.name as artist_name from playlist_track p " +
+        List<Map<Long, Track>> trackList = template.query(
+                "select p.id as id, p.track_id as track_id, t.name as track_name, ar.name as artist_name from playlist_track p " +
                         "inner join tracks t on t.id = p.track_id inner join albums a on a.id = t.album_id " +
                         "inner join artists ar on ar.id = a.artist_id " +
                         "where p.playlist_id = :id",
                 Map.of("id", id),
-                (resultSet, i) -> new Track(
+                (resultSet, i) -> Map.of(resultSet.getLong("id"), new Track(
                         resultSet.getLong("track_id"),
                         resultSet.getString("track_name"),
                         resultSet.getString("artist_name")
-                )
+                ))
         );
         return template.queryForObject(
                 "select p.id as playlist_id, p.name as playlist_name " +
@@ -78,12 +78,11 @@ public class PlaylistManager {
         );
     }
 
-    public void removeTrack(long playlistId, long trackId) {
+    public void removeTrack(long playlistTrackId) {
         template.update(
-                "delete from playlist_track where playlist_id = :playlist_id and track_id = :track_id",
+                "delete from playlist_track where id = :id",
                 new MapSqlParameterSource(Map.of(
-                        "playlist_id", playlistId,
-                        "track_id", trackId
+                        "id", playlistTrackId
                 ))
         );
     }

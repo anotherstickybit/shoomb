@@ -9,7 +9,7 @@ import tech.itpark.shoomb.model.AlbumPreview;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RequiredArgsConstructor
 @RequestMapping("/albums")
 public class AlbumController {

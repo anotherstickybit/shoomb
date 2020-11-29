@@ -9,7 +9,7 @@ import tech.itpark.shoomb.model.PlaylistPreview;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RequestMapping("/playlists")
 @RequiredArgsConstructor
 public class PlaylistController {
@@ -36,12 +36,12 @@ public class PlaylistController {
     }
 
     @DeleteMapping("/remove/{id}")
-    public void removeTrack(@PathVariable long id, @RequestParam long trackId) {
-        playlistManager.removeTrack(id, trackId);
+    public void removeTrack(@PathVariable long id) {
+        playlistManager.removeTrack(id);
     }
 
     @DeleteMapping("/removepl/{id}")
-    public void removeTrack(@PathVariable long id) {
+    public void removePlaylist(@PathVariable long id) {
         playlistManager.removePlaylist(id);
     }
 
