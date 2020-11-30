@@ -55,15 +55,21 @@ public class PlaylistManager {
 
     public void createNew(PlaylistPreview playlistPreview) {
         if (playlistPreview.getId() == 0) {
-            KeyHolder keyHolder = new GeneratedKeyHolder();
             template.update(
                     "insert into playlists(name) values (:name)",
                     new MapSqlParameterSource(Map.of(
                             "name", playlistPreview.getName()
-                    )),
-                    keyHolder
+                    ))
             );
+            return;
         }
+        template.update(
+                "update playlists set name = :name where id = :id",
+                new MapSqlParameterSource(Map.of(
+                        "id", playlistPreview.getId(),
+                        "name", playlistPreview.getName()
+                ))
+        );
     }
 
     public void addTrack(long playlistId, long trackId) {
