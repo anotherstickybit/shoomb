@@ -26,8 +26,8 @@ public class PlaylistController {
     }
 
     @PostMapping
-    public void createNew(@RequestBody PlaylistPreview playlistPreview) {
-        playlistManager.createNew(playlistPreview);
+    public void save(@RequestBody PlaylistPreview playlistPreview) {
+        playlistManager.save(playlistPreview);
     }
 
     @PostMapping("/add/{id}")

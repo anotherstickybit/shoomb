@@ -29,6 +29,9 @@ DELETE http://localhost:8080/playlists/remove/1?trackId=1
 ###
 GET http://localhost:8080/artists/search/gree
 
+###
+GET http://localhost:8080/tracks/search/enter
+
 
 ###
 DELETE http://localhost:8080/playlists/removepl/1
@@ -39,6 +42,15 @@ DELETE http://localhost:8080/playlists/remove/10
 
 ###
 GET http://localhost:8080/albums/4
+
+###
+GET http://localhost:8080/albums/artist/1
+
+###
+GET http://localhost:8080/artists
+
+###
+GET http://localhost:8080/artists/1
 
 ###
 GET http://localhost:8080/tracks/search/enter

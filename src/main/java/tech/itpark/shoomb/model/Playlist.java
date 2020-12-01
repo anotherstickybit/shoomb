@@ -9,5 +9,5 @@ import java.util.Map;
 public class Playlist {
     long id;
     String name;
-    List<Map<Long, Track>> trackList;
+    List<PlaylistTrack> trackList;
 }

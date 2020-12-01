@@ -6,8 +6,10 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import tech.itpark.shoomb.exception.EmptyParameterException;
 import tech.itpark.shoomb.model.Playlist;
 import tech.itpark.shoomb.model.PlaylistPreview;
+import tech.itpark.shoomb.model.PlaylistTrack;
 import tech.itpark.shoomb.model.Track;
 
 import java.util.List;
@@ -29,13 +31,13 @@ public class PlaylistManager {
     }
 
     public Playlist getById(long id) {
-        List<Map<Long, Track>> trackList = template.query(
+        List<PlaylistTrack> trackList = template.query(
                 "select p.id as id, p.track_id as track_id, t.name as track_name, ar.name as artist_name from playlist_track p " +
                         "inner join tracks t on t.id = p.track_id inner join albums a on a.id = t.album_id " +
                         "inner join artists ar on ar.id = a.artist_id " +
                         "where p.playlist_id = :id",
                 Map.of("id", id),
-                (resultSet, i) -> Map.of(resultSet.getLong("id"), new Track(
+                (resultSet, i) -> new PlaylistTrack(resultSet.getLong("id"), new Track(
                         resultSet.getLong("track_id"),
                         resultSet.getString("track_name"),
                         resultSet.getString("artist_name")
@@ -53,7 +55,10 @@ public class PlaylistManager {
         );
     }
 
-    public void createNew(PlaylistPreview playlistPreview) {
+    public void save(PlaylistPreview playlistPreview) {
+        if (playlistPreview.getName().isEmpty()) {
+            throw new EmptyParameterException();
+        }
         if (playlistPreview.getId() == 0) {
             template.update(
                     "insert into playlists(name) values (:name)",
@@ -73,14 +78,12 @@ public class PlaylistManager {
     }
 
     public void addTrack(long playlistId, long trackId) {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
         template.update(
                 "insert into playlist_track(playlist_id, track_id) values (:playlist_id, :track_id)",
                 new MapSqlParameterSource(Map.of(
                         "playlist_id", playlistId,
                         "track_id", trackId
-                )),
-                keyHolder
+                ))
         );
     }
 
