@@ -182,27 +182,7 @@ class ShoombApplicationTests {
                         "  }\n" +
                         "]"));
 
-        mockMvc.perform(get("/artists"))
-                .andExpect(content().json("[\n" +
-                        "  {\n" +
-                        "    \"id\": 2,\n" +
-                        "    \"name\": \"AC/DC\"\n" +
-                        "  },\n" +
-                        "  {\n" +
-                        "    \"id\": 3,\n" +
-                        "    \"name\": \"Green Day\"\n" +
-                        "  },\n" +
-                        "  {\n" +
-                        "    \"id\": 4,\n" +
-                        "    \"name\": \"Imagine Dragons\"\n" +
-                        "  },\n" +
-                        "  {\n" +
-                        "    \"id\": 1,\n" +
-                        "    \"name\": \"Metallica\"\n" +
-                        "  }\n" +
-                        "]"));
-
-        mockMvc.perform(get("/artists/1"))
+                mockMvc.perform(get("/artists/1"))
                 .andExpect(content().json("{\n" +
                         "  \"id\": 1,\n" +
                         "  \"name\": \"Metallica\"\n" +

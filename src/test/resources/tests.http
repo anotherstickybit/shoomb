@@ -54,3 +54,7 @@ GET http://localhost:8080/artists/1
 
 ###
 GET http://localhost:8080/tracks/search/enter
+
+###
+GET http://localhost:8080/genres/artists?ids=1,2
+

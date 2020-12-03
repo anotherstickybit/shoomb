@@ -2,7 +2,8 @@ insert into artists(name)
 values ('Metallica'),
        ('AC/DC'),
        ('Green Day'),
-       ('Imagine Dragons')
+       ('Imagine Dragons'),
+       ('Eminem')
 ;
 
 INSERT INTO albums(artist_id, name, img_url)
@@ -125,4 +126,18 @@ VALUES (1, 2),
        (3, 10),
        (3, 4),
        (3, 2)
-       ;
+;
+
+insert into genres(name)
+values ( 'Рок' ),
+       ( 'Рэп и хип-хоп' ),
+       ( 'Электроника' ),
+       ( 'Классика' )
+;
+
+insert into genre_artist(genre_id, artist_id)
+VALUES (1, 1),
+       (1, 2),
+       (1, 3),
+       (2, 5)
+;
