@@ -7,6 +7,7 @@ import tech.itpark.shoomb.model.Artist;
 import tech.itpark.shoomb.model.Genre;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin
@@ -21,7 +22,7 @@ public class GenreController {
     }
 
     @GetMapping("/artists")
-    public List<Artist> getArtistsByGenreId(@RequestParam Long[] ids) {
+    public List<Artist> getArtistsByGenreId(@RequestParam Set<Long> ids) {
         return genreManager.getArtistsByGenreId(ids);
     }
 }

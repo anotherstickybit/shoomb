@@ -26,8 +26,7 @@ public class GenreManager {
         );
     }
 
-    public List<Artist> getArtistsByGenreId(Long... id) {
-        Set<Long> ids = new HashSet<>(Arrays.asList(id));
+    public List<Artist> getArtistsByGenreId(Set<Long> ids) {
         return template.query(
                 "select genre_id, a.id as artist_id, a.name as artist_name from genre_artist " +
                         "inner join artists a on a.id = genre_artist.artist_id " +
