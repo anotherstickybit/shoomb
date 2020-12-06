@@ -56,7 +56,7 @@ public class PlaylistManager {
     }
 
     public void save(PlaylistPreview playlistPreview) {
-        if (playlistPreview.getName().isEmpty()) {
+        if (playlistPreview == null) {
             throw new EmptyParameterException();
         }
         if (playlistPreview.getId() == 0) {

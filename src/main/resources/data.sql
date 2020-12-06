@@ -2,7 +2,6 @@ insert into artists(name)
 values ('Metallica'),
        ('AC/DC'),
        ('Green Day'),
-       ('Imagine Dragons'),
        ('Eminem')
 ;
 
@@ -15,7 +14,7 @@ VALUES (1, 'Master of Puppets', 'https://upload.wikimedia.org/wikipedia/en/b/b2/
        (2, 'Power Up', 'https://upload.wikimedia.org/wikipedia/ru/thumb/4/4f/ACDCPowerUp.jpg/800px-ACDCPowerUp.jpg'),
        (3, 'American Idiot', 'https://upload.wikimedia.org/wikipedia/ru/c/c0/Greenday_americanidiot.png'),
        (3, 'Dookie', 'https://upload.wikimedia.org/wikipedia/ru/2/2e/Dookie.jpg'),
-       (4, 'Dragons1', 'url5')
+       (4, 'Music to Be Murdered By', 'https://upload.wikimedia.org/wikipedia/ru/1/1e/Music_To_Be_Murdered_By.jpg')
 ;
 
 insert into tracks(name, album_id)
@@ -106,7 +105,25 @@ values ('Battery', 1),
        ('When I Come Around', 8),
        ('Coming Clean', 8),
        ('Emenius Sleepus', 8),
-       ('In the End', 8)
+       ('In the End', 8),
+       ('Premonition', 9),
+       ('Unaccommodating', 9),
+       ('You Gon'' Learn', 9),
+       ('Alfred', 9),
+       ('Those Kinda Nights', 9),
+       ('In Too Deep', 9),
+       ('Godzilla', 9),
+       ('Darkness', 9),
+       ('Leaving Heaven', 9),
+       ('Yah Yah', 9),
+       ('Stepdad', 9),
+       ('Marsh', 9),
+       ('Never Love Again', 9),
+       ('Little Engine', 9),
+       ('Lock It Up', 9),
+       ('Farewell', 9),
+       ('No Regrets', 9),
+       ('I Will', 9)
 ;
 
 insert into playlists(name)
@@ -139,5 +156,5 @@ insert into genre_artist(genre_id, artist_id)
 VALUES (1, 1),
        (1, 2),
        (1, 3),
-       (2, 5)
+       (2, 4)
 ;
