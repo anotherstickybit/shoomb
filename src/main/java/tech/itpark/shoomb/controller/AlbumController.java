@@ -21,8 +21,8 @@ public class AlbumController {
     }
 
     @GetMapping("/artist/{id}")
-    public List<AlbumPreview> getAllByArtist(@PathVariable long id) {
-        return albumManager.getAllByArtist(id);
+    public List<AlbumPreview> getAllByArtistId(@PathVariable long id) {
+        return albumManager.getAllByArtistId(id);
     }
 
 }

@@ -1,19 +1,13 @@
 package tech.itpark.shoomb.manager;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 import tech.itpark.shoomb.model.Album;
 import tech.itpark.shoomb.model.AlbumPreview;
 import tech.itpark.shoomb.model.Artist;
 import tech.itpark.shoomb.model.Track;
 
-import java.io.Serializable;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +46,7 @@ public class AlbumManager {
         );
     }
 
-    public List<AlbumPreview> getAllByArtist(long artistId) {
+    public List<AlbumPreview> getAllByArtistId(long artistId) {
        return template.query(
                 "select a.id as album_id, a.name as album_name, a.img_url as image_url, " +
                         "ar.id as artist_id, ar.name as artist_name  " +

@@ -3,8 +3,6 @@ package tech.itpark.shoomb.manager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import tech.itpark.shoomb.exception.EmptyParameterException;
 import tech.itpark.shoomb.model.Playlist;
@@ -22,7 +20,7 @@ public class PlaylistManager {
 
     public List<PlaylistPreview> getAll() {
         return template.query(
-                "select id as playlist_id, name as playlist_name from playlists order by name",
+                "select id as playlist_id, name as playlist_name from playlists order by name limit 50",
                 (resultSet, i) -> new PlaylistPreview(
                         resultSet.getLong("playlist_id"),
                         resultSet.getString("playlist_name")
