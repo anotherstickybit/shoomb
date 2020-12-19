@@ -1,13 +1,13 @@
 
 ###
-GET http://localhost:8080/playlists
+GET https://shoom-music.herokuapp.com/playlists
 
 ###
-GET http://localhost:8080/playlists/1
+GET https://shoom-music.herokuapp.com/playlists/1
 
 
 ###
-POST http://localhost:8080/playlists
+POST https://shoom-music.herokuapp.com/playlists
 Content-Type: application/json
 
 {
@@ -15,46 +15,43 @@ Content-Type: application/json
   "name": "rap"
 }
 
-###
-
-DELETE http://localhost:8080/playlists/delete/playlist 2
 
 ###
-POST http://localhost:8080/playlists/add/1?trackId=1
+POST https://shoom-music.herokuapp.com/playlists/add/1?trackId=1
 
 ###
-DELETE http://localhost:8080/playlists/remove/1?trackId=1
+DELETE https://shoom-music.herokuapp.com/playlists/remove/1?trackId=1
 
 
 ###
-GET http://localhost:8080/artists/search/gree
+GET https://shoom-music.herokuapp.com/artists/search/gree
 
 ###
-GET http://localhost:8080/tracks/search/enter
-
-
-###
-DELETE http://localhost:8080/playlists/removepl/1
-
-###
-DELETE http://localhost:8080/playlists/remove/10
+GET https://shoom-music.herokuapp.com/tracks/search/enter
 
 
 ###
-GET http://localhost:8080/albums/4
+DELETE https://shoom-music.herokuapp.com/playlists/removepl/1
 
 ###
-GET http://localhost:8080/albums/artist/1
+DELETE https://shoom-music.herokuapp.com/playlists/remove/10
+
 
 ###
-GET http://localhost:8080/artists
+GET https://shoom-music.herokuapp.com/albums/4
 
 ###
-GET http://localhost:8080/artists/1
+GET https://shoom-music.herokuapp.com/albums/artist/1
 
 ###
-GET http://localhost:8080/tracks/search/enter
+GET https://shoom-music.herokuapp.com/artists
 
 ###
-GET http://localhost:8080/genres/artists?ids=1,2
+GET https://shoom-music.herokuapp.com/artists/1
+
+###
+GET https://shoom-music.herokuapp.com/genres/artists?ids=1,2
+
+###
+GET https://project-skyscanner.herokuapp.com/flights/
 

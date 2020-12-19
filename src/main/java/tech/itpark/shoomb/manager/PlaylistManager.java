@@ -57,6 +57,9 @@ public class PlaylistManager {
         if (playlistPreview == null) {
             throw new EmptyParameterException();
         }
+        if (playlistPreview.getName().equals("")) {
+            throw new EmptyParameterException();
+        }
         if (playlistPreview.getId() == 0) {
             template.update(
                     "insert into playlists(name) values (:name)",
