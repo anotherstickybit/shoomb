@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  shoom:
+    image: shoomb-shoom:latest
+    build:
+      args:
+        JAR_FILE: target/shoomb-0.0.1-SNAPSHOT.jar
+    ports:
+      - "8080:8080"
